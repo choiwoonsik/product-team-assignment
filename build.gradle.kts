@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
+    kotlin("kapt") version "1.9.23"
     id("org.flywaydb.flyway") version "7.7.3"
 }
 
@@ -59,9 +60,17 @@ dependencies {
      */
     implementation("com.google.code.gson:gson:2.10.1")
 
-    implementation("com.querydsl:querydsl-jpa:5.1.0")
+    /**
+     * querydsl
+     */
+    implementation("com.querydsl:querydsl-jpa:5.1.0:jakarta")
+    implementation("com.querydsl:querydsl-core:5.1.0")
+    kapt("com.querydsl:querydsl-apt:5.1.0:jakarta")
+    kapt("com.querydsl:querydsl-kotlin-codegen:5.1.0")
 
     implementation("io.springfox:springfox-swagger-ui:3.0.0")
+
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
 
     runtimeOnly("com.mysql:mysql-connector-j")
 
@@ -117,4 +126,31 @@ task<org.flywaydb.gradle.task.FlywayCleanTask>("flywayCleanTestDB") {
     user = "product"
     password = "product"
     schemas = listOf("product_team_test").toTypedArray()
+}
+
+sourceSets {
+    create("integrationTest") {
+        kotlin {
+            setSrcDirs(setOf("src/integrationTest/kotlin"))
+        }
+        resources {
+            setSrcDirs(setOf("src/integrationTest/resources"))
+        }
+        compileClasspath += sourceSets["test"].runtimeClasspath
+        runtimeClasspath += sourceSets["test"].runtimeClasspath
+    }
+}
+
+val integrationTest = task<Test>("integrationTest") {
+    description = "Runs the integration tests"
+    group = "verification"
+    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+    classpath = sourceSets["integrationTest"].runtimeClasspath
+}
+
+val unitTest = task<Test>("unitTest") {
+    description = "Runs the unit tests"
+    group = "verification"
+    testClassesDirs = sourceSets["test"].output.classesDirs
+    classpath = sourceSets["test"].runtimeClasspath
 }

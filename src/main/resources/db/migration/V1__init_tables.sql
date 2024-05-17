@@ -1,8 +1,8 @@
-create table `pos_easy_connection_agreement_record`
+create table `pos_easy_connection_agreement_records`
 (
     id                              bigint          not null auto_increment,
     registration_number             varchar(255)    not null comment '사업자 등록 번호',
-    agreement_type                  varchar(255)    not null comment 'POS 카드 실시간 데이터 연동 동의 유형(POS_VERIFIY_CONNECTABLE, POS_CONNECT)',
+    agreement_type                  varchar(255)    not null comment 'POS 카드 실시간 데이터 연동 동의 유형(POS_VERIFY_CONNECTABLE, POS_CONNECT)',
     is_agreed_yn                    varchar(255)    not null comment '동의 여부(Y/N)',
     date_created                    datetime(6)     not null comment '생성일시',
     date_updated                    datetime(6)     not null comment '수정일시',
@@ -12,7 +12,7 @@ create table `pos_easy_connection_agreement_record`
     comment 'POS 카드 실시간 데이터 연동 동의 내역';
 
 create index registration_number_agreement_type
-    on pos_easy_connection_agreement_record (registration_number, agreement_type);
+    on pos_easy_connection_agreement_records (registration_number, agreement_type);
 
 create table `pos_sales_card_transactions`
 (

@@ -1,0 +1,6 @@
+package kcd.productteam.pos.repository
+
+import kcd.productteam.pos.model.PosEasyConnectionAgreementRecord
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface PosEasyConnectionAgreementRecordJpaRepository : JpaRepository<PosEasyConnectionAgreementRecord, Long>
