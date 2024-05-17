@@ -1,0 +1,42 @@
+version: '3'
+
+volumes:
+  product_team-mysql:
+
+services:
+  mysql:
+    container_name: product_team-mysql
+    image: ubuntu/mysql:edge
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --explicit_defaults_for_timestamp=1 --init-file /data/application/init.sql
+    environment:
+      - MYSQL_DATABASE=product_team
+      - MYSQL_USER=product
+      - MYSQL_PASSWORD=product
+      - MYSQL_ROOT_PASSWORD=product
+      - TZ=UTC
+    volumes:
+      - product_team-mysql:/var/lib/mysql
+      - ./mysql/init.sql:/data/application/init.sql
+    ports:
+      - "3306:3306"
+
+  zookeeper:
+    container_name: product_team-zookeeper
+    image: zookeeper:latest
+    ports:
+      - "2181:2181"
+
+  kafka:
+    container_name: product_team-kafka
+    image: bitnami/kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
