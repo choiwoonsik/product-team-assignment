@@ -15,4 +15,10 @@ data class PosEasyConnectionAgreementRecordRequest(
             isAgreedYn = this.isAgreedYn,
         )
     }
+
+    fun isValidRegistrationNumber(): Boolean =
+        this.registrationNumber.isNotBlank() && this.registrationNumber.all { it.isDigit() }
+
+    fun isAgreedYn(): Boolean = this.isAgreedYn == "Y" || this.isAgreedYn == "N"
+    fun isAgreed(): Boolean = this.isAgreedYn == "Y"
 }

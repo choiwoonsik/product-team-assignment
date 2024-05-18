@@ -15,7 +15,7 @@ import org.springframework.test.context.TestConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class PosEasyConnectionAgreementRecordQueryRepositoryTest(
     private val posEasyConnectionAgreementRecordJpaRepository: PosEasyConnectionAgreementRecordJpaRepository,
-    private val sut: PosEasyConnectionAgreementRecordQueryRepository,
+    private val sut: PosEasyConnectionAgreementRecordRepository,
 ) {
     @BeforeEach
     fun clear() {
@@ -26,7 +26,7 @@ class PosEasyConnectionAgreementRecordQueryRepositoryTest(
     fun `포스 간편 연결 동의 내역 조회`() {
         // given
         val request = PosEasyConnectionAgreementRecordRequest(
-            registrationNumber = "registrationNumber",
+            registrationNumber = "0123456789",
             agreementType = PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE,
             isAgreedYn = "Y"
         )
@@ -34,13 +34,13 @@ class PosEasyConnectionAgreementRecordQueryRepositoryTest(
 
         // when
         val result = sut.findPosEasyConnectionAgreementRecord(
-            "registrationNumber",
+            "0123456789",
             PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE
         )
 
         // then
         result shouldNotBe null
-        result!!.registrationNumber shouldBe "registrationNumber"
+        result!!.registrationNumber shouldBe "0123456789"
         result.agreementType shouldBe PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE
         result.isAgreedYn shouldBe "Y"
     }

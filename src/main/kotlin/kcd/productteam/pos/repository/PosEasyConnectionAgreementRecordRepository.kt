@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository
 
 @Repository
-class PosEasyConnectionAgreementRecordQueryRepository(
+class PosEasyConnectionAgreementRecordRepository(
     private val posEasyConnectionAgreementRecordJpaRepository: PosEasyConnectionAgreementRecordJpaRepository
 ) : QuerydslRepositorySupport(PosEasyConnectionAgreementRecord::class.java),
     PosEasyConnectionAgreementRecordJpaRepository by posEasyConnectionAgreementRecordJpaRepository {

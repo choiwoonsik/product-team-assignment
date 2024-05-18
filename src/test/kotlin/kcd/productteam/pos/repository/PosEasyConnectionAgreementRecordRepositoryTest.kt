@@ -9,11 +9,11 @@ import kcd.productteam.pos.model.PosEasyConnectionAgreementType
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class PosEasyConnectionAgreementRecordQueryRepositoryTest(
+class PosEasyConnectionAgreementRecordRepositoryTest(
     private val posEasyConnectionAgreementRecordJpaRepository: PosEasyConnectionAgreementRecordJpaRepository,
     private val entityManager: EntityManager,
 ) : TestDatabaseSupport() {
-    private val sut = PosEasyConnectionAgreementRecordQueryRepository(
+    private val sut = PosEasyConnectionAgreementRecordRepository(
         posEasyConnectionAgreementRecordJpaRepository
     )
 
@@ -27,7 +27,7 @@ class PosEasyConnectionAgreementRecordQueryRepositoryTest(
         // given
         sut.save(
             PosEasyConnectionAgreementRecord(
-                registrationNumber = "registrationNumber",
+                registrationNumber = "0123456789",
                 agreementType = PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE,
                 isAgreedYn = "Y"
             )
@@ -36,13 +36,13 @@ class PosEasyConnectionAgreementRecordQueryRepositoryTest(
 
         // when
         val result = sut.findPosEasyConnectionAgreementRecord(
-            "registrationNumber",
+            "0123456789",
             PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE
         )
 
         // then
         result shouldNotBe null
-        result!!.registrationNumber shouldBe "registrationNumber"
+        result!!.registrationNumber shouldBe "0123456789"
         result.agreementType shouldBe PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE
         result.isAgreedYn shouldBe "Y"
     }

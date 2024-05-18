@@ -7,12 +7,16 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 class PosEasyConnectionAgreementRecordCommandService(
+    private val posEasyConnectionAgreementRecordQueryService: PosEasyConnectionAgreementRecordQueryService,
     private val posEasyConnectionAgreementRecordJpaRepository: PosEasyConnectionAgreementRecordJpaRepository,
 ) {
     @Transactional
-    fun createPosEasyConnectionAgreementRecord(
-        posEasyConnectionAgreementRecordRequest: PosEasyConnectionAgreementRecordRequest,
+    fun upsertPosEasyConnectionAgreementRecord(
+        request: PosEasyConnectionAgreementRecordRequest,
     ) {
-        posEasyConnectionAgreementRecordJpaRepository.save(posEasyConnectionAgreementRecordRequest.toEntity())
+        posEasyConnectionAgreementRecordQueryService.findPosEasyConnectionAgreementRecord(request)
+            .let {
+                it?.updateIsAgreedYn(request) ?: posEasyConnectionAgreementRecordJpaRepository.save(request.toEntity())
+            }
     }
 }

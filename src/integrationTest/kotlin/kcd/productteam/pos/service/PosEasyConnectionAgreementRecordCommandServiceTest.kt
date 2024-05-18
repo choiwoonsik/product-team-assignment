@@ -26,17 +26,45 @@ class PosEasyConnectionAgreementRecordCommandServiceTest(
     fun `포스 간편 연결 동의 내역 저장`() {
         // given
         val request = PosEasyConnectionAgreementRecordRequest(
-            registrationNumber = "registrationNumber",
+            registrationNumber = "0123456789",
             agreementType = PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE,
             isAgreedYn = "Y"
         )
 
         // when
-        sut.createPosEasyConnectionAgreementRecord(request)
+        sut.upsertPosEasyConnectionAgreementRecord(request)
 
         // then
         posEasyConnectionAgreementRecordJpaRepository.findAll().first().apply {
-            registrationNumber shouldBe "registrationNumber"
+            registrationNumber shouldBe "0123456789"
+            agreementType shouldBe PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE
+            isAgreedYn shouldBe "Y"
+        }
+    }
+
+    @Test
+    fun `포스 간편 연결 동의 내역 업데이트`() {
+        // given
+        val request = PosEasyConnectionAgreementRecordRequest(
+            registrationNumber = "0123456789",
+            agreementType = PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE,
+            isAgreedYn = "Y"
+        )
+
+        val record = PosEasyConnectionAgreementRecordRequest(
+            registrationNumber = "0123456789",
+            agreementType = PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE,
+            isAgreedYn = "N"
+        ).toEntity()
+
+        posEasyConnectionAgreementRecordJpaRepository.save(record)
+
+        // when
+        sut.upsertPosEasyConnectionAgreementRecord(request)
+
+        // then
+        posEasyConnectionAgreementRecordJpaRepository.findAll().first().apply {
+            registrationNumber shouldBe "0123456789"
             agreementType shouldBe PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE
             isAgreedYn shouldBe "Y"
         }

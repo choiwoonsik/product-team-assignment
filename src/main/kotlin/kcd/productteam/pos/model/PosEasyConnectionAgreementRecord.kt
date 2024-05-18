@@ -17,17 +17,13 @@ class PosEasyConnectionAgreementRecord(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long = 0L,
     @Column(nullable = false) val registrationNumber: String,
     @Column(nullable = false) @Enumerated(EnumType.STRING) val agreementType: PosEasyConnectionAgreementType,
-    @Column(nullable = false) val isAgreedYn: String,
+    @Column(nullable = false) var isAgreedYn: String,
 ) : BaseTimeEntity() {
 
-    companion object {
-        fun from(request: PosEasyConnectionAgreementRecordRequest): PosEasyConnectionAgreementRecord {
-            return PosEasyConnectionAgreementRecord(
-                registrationNumber = request.registrationNumber,
-                agreementType = request.agreementType,
-                isAgreedYn = request.isAgreedYn,
-            )
-        }
+    fun updateIsAgreedYn(request: PosEasyConnectionAgreementRecordRequest): PosEasyConnectionAgreementRecord {
+        if (this.isAgreedYn != request.isAgreedYn) this.isAgreedYn = request.isAgreedYn
+
+        return this
     }
 }
 
