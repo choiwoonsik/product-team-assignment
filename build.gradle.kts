@@ -70,6 +70,8 @@ dependencies {
 
     implementation("io.springfox:springfox-swagger-ui:3.0.0")
 
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.3.1")
+
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 
     runtimeOnly("com.mysql:mysql-connector-j")
