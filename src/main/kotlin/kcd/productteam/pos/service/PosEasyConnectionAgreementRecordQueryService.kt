@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class PosEasyConnectionAgreementRecordQueryService(
     private val posEasyConnectionAgreementRecordRepository: PosEasyConnectionAgreementRecordRepository,
 ) {
-    fun findPosEasyConnectionAgreementRecord(
+    fun findPosEasyConnectionAgreementRecordByRequest(
         request: PosEasyConnectionAgreementRecordRequest,
     ): PosEasyConnectionAgreementRecord? {
         return posEasyConnectionAgreementRecordRepository.findPosEasyConnectionAgreementRecord(

@@ -1,5 +1,6 @@
 package kcd.productteam.pos.dto
 
+import kcd.productteam.external.community.dto.PosEasyConnectionAgreementResult
 import kcd.productteam.pos.model.PosEasyConnectionAgreementRecord
 import kcd.productteam.pos.model.PosEasyConnectionAgreementType
 
@@ -21,4 +22,11 @@ data class PosEasyConnectionAgreementRecordRequest(
 
     fun isAgreedYn(): Boolean = this.isAgreedYn == "Y" || this.isAgreedYn == "N"
     fun isAgreed(): Boolean = this.isAgreedYn == "Y"
+
+    fun toPosEasyConnectionAgreementResult(): PosEasyConnectionAgreementResult {
+        return PosEasyConnectionAgreementResult(
+            registrationNumber = this.registrationNumber,
+            agreedType = this.isAgreedYn,
+        )
+    }
 }

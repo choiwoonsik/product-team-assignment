@@ -33,7 +33,7 @@ class PosEasyConnectionAgreementRecordCommandServiceTest : TestDatabaseSupport()
             isAgreedYn = "Y"
         )
 
-        every { posEasyConnectionAgreementRecordQueryService.findPosEasyConnectionAgreementRecord(request) } returns null
+        every { posEasyConnectionAgreementRecordQueryService.findPosEasyConnectionAgreementRecordByRequest(request) } returns null
         every { posEasyConnectionAgreementRecordJpaRepository.save(any()) } returns mockk()
 
         // when
@@ -62,7 +62,7 @@ class PosEasyConnectionAgreementRecordCommandServiceTest : TestDatabaseSupport()
             )
         }
 
-        every { posEasyConnectionAgreementRecordQueryService.findPosEasyConnectionAgreementRecord(request) } returns record
+        every { posEasyConnectionAgreementRecordQueryService.findPosEasyConnectionAgreementRecordByRequest(request) } returns record
         every { record.updateIsAgreedYn(request) } returns record
         every { posEasyConnectionAgreementRecordJpaRepository.save(any()) } returns mockk()
 

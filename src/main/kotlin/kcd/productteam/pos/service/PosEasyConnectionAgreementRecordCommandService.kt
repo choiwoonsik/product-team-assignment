@@ -14,7 +14,7 @@ class PosEasyConnectionAgreementRecordCommandService(
     fun upsertPosEasyConnectionAgreementRecord(
         request: PosEasyConnectionAgreementRecordRequest,
     ) {
-        posEasyConnectionAgreementRecordQueryService.findPosEasyConnectionAgreementRecord(request)
+        posEasyConnectionAgreementRecordQueryService.findPosEasyConnectionAgreementRecordByRequest(request)
             .let {
                 it?.updateIsAgreedYn(request) ?: posEasyConnectionAgreementRecordJpaRepository.save(request.toEntity())
             }

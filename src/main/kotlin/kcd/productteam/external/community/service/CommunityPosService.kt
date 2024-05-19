@@ -9,7 +9,7 @@ class CommunityPosService(
     private val communityApiService: CommunityApiService,
 ) {
 
-    fun checkIsCommunityUser(registrationNumber: String): Boolean {
+    fun checkIsBusinessUser(registrationNumber: String): Boolean {
         return communityApiService.checkHasBusiness(registrationNumber)
     }
 

@@ -19,7 +19,7 @@ class CommunityPosServiceTest {
         every { communityApiService.checkHasBusiness(any()) } returns true
 
         // when
-        val isCommunityUser = sut.checkIsCommunityUser("1234567890")
+        val isCommunityUser = sut.checkIsBusinessUser("1234567890")
 
         // then
         isCommunityUser shouldBe true
