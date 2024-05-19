@@ -39,9 +39,9 @@ spring:
     locations: classpath:db/migration
     schemas: product_team
 
-  kafka:
-    endpoint:
-      community: localhost:9092
-    consumer:
-      group:
-        id: "product.consumer.local"
+kafka:
+  endpoint:
+    community: localhost:9092
+  consumer:
+    group:
+      id: "product.consumer.local"
