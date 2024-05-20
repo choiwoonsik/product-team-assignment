@@ -32,7 +32,7 @@ class KafkaProducerRunner(private val kafkaProducerService: KafkaProducerService
             "승인번호": 42580512,
             "승인금액": "17,500",
             "할부기간": "일시불",
-            "사업자등록번호": "1234567890"
+            "사업자등록번호": "1234567890$count"
         }""".trimIndent()
     }
 }
