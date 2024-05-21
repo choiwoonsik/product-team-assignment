@@ -12,5 +12,9 @@ fun OffsetDateTime.toExactlyHour(hour: Int = 0): OffsetDateTime {
 }
 
 fun OffsetDateTime.getYmd(): String {
-    return "${this.year}-${this.monthValue}-${this.dayOfMonth}"
+    val year = "${this.year}".padStart(4, '0')
+    val month = "${this.monthValue}".padStart(2, '0')
+    val day = "${this.dayOfMonth}".padStart(2, '0')
+
+    return "$year-$month-$day"
 }

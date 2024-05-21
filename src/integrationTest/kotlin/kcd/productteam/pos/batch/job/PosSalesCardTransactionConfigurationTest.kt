@@ -6,6 +6,7 @@ import kcd.productteam.pos.model.PosEasyConnectionAgreementType
 import kcd.productteam.pos.model.PosEasyConnectionAgreementType.POS_CONNECT
 import kcd.productteam.pos.model.PosSalesCardTransaction
 import kcd.productteam.pos.model.PosSalesCardTransactionDataSource
+import kcd.productteam.pos.model.PosSalesCardTransactionDataSource.CACHE_NOTE
 import kcd.productteam.pos.repository.PosEasyConnectionAgreementRecordRepository
 import kcd.productteam.pos.repository.PosSalesCardTransactionRepository
 import kcd.productteam.utils.getNowUTCOffsetDateTime
@@ -53,7 +54,7 @@ class PosSalesCardTransactionConfigurationTest(
             }
         posEasyConnectionAgreementRecordRepository.saveAll(updateRecords)
 
-        val transactions = (1..100).map { getPosSalesCardTransaction(it.toString()) }
+        val transactions = (1..100).map { getPosSalesCardTransaction(it.toString(), CACHE_NOTE) }
         posSalesCardTransactionRepository.saveAll(transactions)
     }
 
@@ -64,6 +65,7 @@ class PosSalesCardTransactionConfigurationTest(
             .toJobParameters()
 
         val jobExecution: JobExecution = jobLauncherTestUtils.launchJob(jobParameters)
+
         jobExecution.status shouldBe BatchStatus.COMPLETED
     }
 
@@ -79,7 +81,10 @@ class PosSalesCardTransactionConfigurationTest(
         )
     }
 
-    private fun getPosSalesCardTransaction(registrationNumber: String): PosSalesCardTransaction {
+    private fun getPosSalesCardTransaction(
+        registrationNumber: String,
+        dataSource: PosSalesCardTransactionDataSource,
+    ): PosSalesCardTransaction {
         return PosSalesCardTransaction(
             no = 1,
             type = "승인",
@@ -92,7 +97,7 @@ class PosSalesCardTransactionConfigurationTest(
             approvalAmount = "17,500",
             installmentMonth = "일시불",
             registrationNumber = registrationNumber,
-            dataSource = PosSalesCardTransactionDataSource.COMMUNITY
+            dataSource = dataSource,
         )
     }
 }

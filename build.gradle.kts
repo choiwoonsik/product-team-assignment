@@ -84,6 +84,7 @@ dependencies {
     testImplementation("org.springframework.kafka:spring-kafka-test")
     testImplementation("io.kotest:kotest-runner-junit5:4.6.3")
     testImplementation("io.kotest:kotest-assertions-core:4.6.3")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
 
     /**
      * mockk

@@ -21,7 +21,7 @@ class PosSalesCardTransactionRepository(
         super.setEntityManager(entityManager)
     }
 
-    fun findPosSalesCardTransactionDaily(
+    fun findAllPosSalesCardTransactionDaily(
         registrationNumbers: List<String>,
         dataSource: PosSalesCardTransactionDataSource,
     ): List<PosSalesCardTransaction> {
@@ -32,7 +32,8 @@ class PosSalesCardTransactionRepository(
             .fetch()
     }
 
-    fun findPosSalesCardTransactionPastMonthHistory(
+    fun findAllPosSalesCardTransactionPastMonthHistory(
+        pastMonth: Int,
         registrationNumber: String,
         dataSource: PosSalesCardTransactionDataSource,
     ): List<PosSalesCardTransaction> {
@@ -41,7 +42,7 @@ class PosSalesCardTransactionRepository(
             .where(posSalesCardTransaction.dataSource.eq(dataSource))
             .where(
                 posSalesCardTransaction.transactionDateYmd.between(
-                    getNowUTCOffsetDateTime().minusMonths(6).withDayOfMonth(1).getYmd(),
+                    getNowUTCOffsetDateTime().minusMonths(pastMonth.toLong()).withDayOfMonth(1).getYmd(),
                     getNowUTCOffsetDateTime().minusDays(1).getYmd()
                 )
             )

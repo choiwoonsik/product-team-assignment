@@ -1,6 +1,8 @@
 package kcd.productteam.external.service.restTemplateService
 
 import com.google.gson.Gson
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpMethod
 import org.springframework.http.RequestEntity
 import org.springframework.retry.annotation.Backoff
@@ -14,8 +16,13 @@ class RestTemplateService(
     private val restTemplate: RestTemplate,
     private val gson: Gson,
 ) {
+    private val logger: Logger = LoggerFactory.getLogger(this::class.simpleName)
 
-    @Retryable(maxAttempts = 3, backoff = Backoff(delay = 100))
+    @Retryable(
+        maxAttempts = 3,
+        backoff = Backoff(delay = 100),
+        include = [RuntimeException::class],
+    )
     fun <T> fetch(
         method: HttpMethod,
         path: String,
@@ -23,6 +30,8 @@ class RestTemplateService(
         queryParams: Map<String, String>,
         responseType: Class<T>,
     ): T {
+        logger.info("Fetching data from $path")
+
         val uri = UriComponentsBuilder.fromHttpUrl(path)
             .apply { queryParams.forEach { (key, value) -> queryParam(key, value) } }
             .build()

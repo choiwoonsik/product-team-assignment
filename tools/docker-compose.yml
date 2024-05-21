@@ -2,6 +2,8 @@ version: '3'
 
 volumes:
   product_team-mysql:
+  product_team-zookeeper:
+  product_team-kafka:
 
 services:
   mysql:

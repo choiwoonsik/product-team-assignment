@@ -5,12 +5,14 @@ import kcd.productteam.pos.dto.PosEasyConnectionAgreementRecordRequest
 import kcd.productteam.pos.model.PosEasyConnectionAgreementType.POS_CONNECT
 import kcd.productteam.pos.model.PosEasyConnectionAgreementType.POS_VERIFY_CONNECTABLE
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PosEasyConnectionAgreementRecordService(
     private val poseEasyConnectionAgreementRecordCommandService: PosEasyConnectionAgreementRecordCommandService,
     private val communityPosService: CommunityPosService,
 ) {
+    @Transactional
     fun createPosEasyConnectionAgreementRecord(request: PosEasyConnectionAgreementRecordRequest) {
         validate(request)
         poseEasyConnectionAgreementRecordCommandService.upsertPosEasyConnectionAgreementRecord(request)

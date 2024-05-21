@@ -48,12 +48,17 @@ class PosTestFixtures {
         )
     }
 
-    fun getPosSalesCardTransaction(registrationNumber: String): PosSalesCardTransaction {
+    fun getPosSalesCardTransaction(
+        registrationNumber: String,
+        transactionDateYmd: String = "2022-02-05",
+        transactionTimeHms: String = "13:45:27",
+        dataSource: PosSalesCardTransactionDataSource = PosSalesCardTransactionDataSource.COMMUNITY
+    ): PosSalesCardTransaction {
         return PosSalesCardTransaction(
             no = 1,
             type = "승인",
-            transactionDateYmd = "2022-02-05",
-            transactionTimeHms = "13:45:27",
+            transactionDateYmd = transactionDateYmd,
+            transactionTimeHms = transactionTimeHms,
             cardCompany = "농협NH카드",
             affiliateCardCompany = "농협NH카드",
             cardNumber = "5461-11-****-****",
@@ -61,7 +66,7 @@ class PosTestFixtures {
             approvalAmount = "17,500",
             installmentMonth = "일시불",
             registrationNumber = registrationNumber,
-            dataSource = PosSalesCardTransactionDataSource.COMMUNITY
+            dataSource = dataSource,
         )
     }
 }

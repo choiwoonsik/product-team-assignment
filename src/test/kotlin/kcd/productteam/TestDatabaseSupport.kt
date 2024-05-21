@@ -4,9 +4,11 @@ import kcd.productteam.config.AuditConfig
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.context.annotation.Import
+import org.springframework.retry.annotation.Retryable
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
 
+@Retryable
 @TestDatabaseClear
 @ActiveProfiles("test")
 @DataJpaTest

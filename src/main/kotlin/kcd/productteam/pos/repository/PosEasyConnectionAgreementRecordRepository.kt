@@ -10,6 +10,7 @@ import kcd.productteam.utils.getNowUTCOffsetDateTime
 import kcd.productteam.utils.toExactlyHour
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 
 @Repository
 class PosEasyConnectionAgreementRecordRepository(
@@ -32,6 +33,7 @@ class PosEasyConnectionAgreementRecordRepository(
             .fetchOne()
     }
 
+    @Transactional(readOnly = true)
     fun findAllPosEasyConnectionAgreedRecordDailyTarget(
     ): List<PosEasyConnectionAgreementRecord> {
         return from(posEasyConnectionAgreementRecord)

@@ -17,6 +17,20 @@ data class PosSalesCardTransactionEventDto(
     @JsonProperty("할부기간") val installmentMonth: String,
     @JsonProperty("사업자등록번호") val registrationNumber: String
 ) {
+    constructor(entity: PosSalesCardTransaction) : this(
+        no = entity.no,
+        type = entity.type,
+        transactionDateYmd = entity.transactionDateYmd,
+        transactionTimeHms = entity.transactionTimeHms,
+        cardCompany = entity.cardCompany,
+        affiliateCardCompany = entity.affiliateCardCompany,
+        cardNumber = entity.cardNumber,
+        approvalNumber = entity.approvalNumber,
+        approvalAmount = entity.approvalAmount,
+        installmentMonth = entity.installmentMonth,
+        registrationNumber = entity.registrationNumber
+    )
+
     fun toEntity(dataSource: PosSalesCardTransactionDataSource): PosSalesCardTransaction {
         return PosSalesCardTransaction(
             no = no,
